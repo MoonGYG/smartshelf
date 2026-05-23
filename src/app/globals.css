@@ -1,26 +1,103 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Warm Library Palette */
+  --bg-primary: #1a1410;
+  --bg-secondary: #231c15;
+  --bg-card: #2a2118;
+  --bg-card-hover: #332820;
+  --border-color: #3d3028;
+  --text-primary: #f5e6d3;
+  --text-secondary: #c4a882;
+  --text-muted: #8b7355;
+  --accent-gold: #d4a550;
+  --accent-amber: #e8a840;
+  --accent-green: #6b9e5a;
+  --accent-rust: #c47a4a;
+  --accent-wine: #8b3a4a;
+  --shelf-wood: #3d2b1a;
+  --shelf-wood-light: #5a3f28;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/playfairdisplay/v37/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwcbmjWBN2PKd3vXDXbtXK-F2qC0s.woff2') format('woff2');
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@font-face {
+  font-family: 'Source Serif';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/sourceserif4/v8/vEFy2_tTDB4M7-auWDN0ahZJW3IX2ih5nk3AucvUHf64.woff2') format('woff2');
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Source Serif', Georgia, 'Times New Roman', serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
 }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+/* Book card spine effect */
+.book-spine {
+  background: linear-gradient(90deg, 
+    rgba(0,0,0,0.3) 0%, 
+    rgba(0,0,0,0.05) 3%, 
+    rgba(255,255,255,0.05) 5%, 
+    rgba(0,0,0,0) 10%);
+}
+
+/* Shelf wood grain */
+.shelf-wood {
+  background: linear-gradient(180deg,
+    var(--shelf-wood-light) 0%,
+    var(--shelf-wood) 15%,
+    #2a1e12 50%,
+    var(--shelf-wood) 85%,
+    var(--shelf-wood-light) 100%);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+}
+
+/* Progress bar with book pages feel */
+.reading-progress {
+  background: repeating-linear-gradient(
+    90deg,
+    var(--accent-gold) 0px,
+    var(--accent-gold) 3px,
+    var(--accent-amber) 3px,
+    var(--accent-amber) 4px
+  );
+}
+
+/* Warm glow effect */
+.warm-glow {
+  box-shadow: 0 0 30px rgba(212,165,80,0.08), 0 0 60px rgba(212,165,80,0.04);
+}
+
+/* Library card style */
+.library-card {
+  background: linear-gradient(135deg, #f5e6d3 0%, #e8d5bc 100%);
+  color: #2a1e12;
+  border: 1px solid #c4a882;
+  font-family: 'Source Serif', serif;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* Toast notification */
+@keyframes slideIn {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.toast-enter { animation: slideIn 0.3s ease-out; }
