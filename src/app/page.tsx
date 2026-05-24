@@ -236,7 +236,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="relative z-10 border-t border-[var(--border-color)]/30 mt-12">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <p className="text-xs text-[var(--text-muted)]">© 2026 SmartShelf — Built by MiMo v2.5 Pro. Built with MiMo AI.</p>
+          <p className="text-xs text-[var(--text-muted)]">© 2026 SmartShelf — Built by MiMo v2.5 Pro</p>
           <p className="text-xs text-[var(--text-muted)]">v1.0.0</p>
         </div>
       </footer>
