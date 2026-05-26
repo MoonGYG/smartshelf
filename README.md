@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📚 Smart Shelf
 
-## Getting Started
+Your personal AI-powered bookshelf. Track what you've read, what you're reading, and what's next. Get AI recommendations based on your taste.
 
-First, run the development server:
+![Smart Shelf](proof/commit-log.png)
+
+## What you can do
+
+**Manage your library:**
+- Add books with title, author, genre, and reading status
+- Search across your entire collection
+- Filter by status (reading / completed / want to read) and genre
+- View stats: total books, pages read, genre breakdown
+
+**AI-powered recommendations:**
+- Get personalized book suggestions based on your shelf
+- Powered by MiMo v2.5 Pro reasoning engine
+- Recommendations adapt as your library grows
+
+**Data stays local:**
+- Everything saved to localStorage
+- No account needed, no data sent to servers
+- Works offline after first load
+
+## Quick start
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install && npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Architecture
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+src/
+├── app/
+│   ├── api/recommend/route.ts   # AI recommendation endpoint
+│   ├── page.tsx                 # Main bookshelf view
+│   ├── globals.css              # Gold/amber library theme
+│   └── layout.tsx
+├── components/
+│   ├── BookCard.tsx             # Individual book display
+│   ├── AddBookModal.tsx         # New book form
+│   ├── StatsPanel.tsx           # Reading statistics
+│   └── AIRecommendations.tsx    # AI suggestion panel
+├── lib/
+│   └── types.ts                 # TypeScript types + sample data
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Tech
 
-## Learn More
+| Tool | Purpose |
+|------|---------|
+| Next.js 16 | Framework |
+| Tailwind CSS 4 | Styling |
+| TypeScript | Type safety |
+| MiMo v2.5 Pro | AI recommendations |
+| localStorage | Client-side persistence |
 
-To learn more about Next.js, take a look at the following resources:
+## Design
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Warm library aesthetic. Gold (#d4a843) and amber accents on dark navy (#0f172a). Playfair Display serif headings, Inter body text. Subtle dot-grid background texture.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+Built with **MiMo v2.5 Pro** by Xiaomi — [huggingface.co/XiaomiMiMo](https://huggingface.co/XiaomiMiMo)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+*Crafted with MiMo v2.5 Pro*
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
