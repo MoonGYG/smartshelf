@@ -3,8 +3,8 @@
 import { useState, useEffect, useMemo } from "react";
 import { Book, SAMPLE_BOOKS } from "@/lib/types";
 import {
-  BookOpen, Plus, Search, LayoutGrid, List, Library,
-  Sparkles, BarChart3, Filter
+  BookOpen, Plus, Search, Library,
+  Sparkles, BarChart3
 } from "lucide-react";
 import BookCard from "@/components/BookCard";
 import AddBookModal from "@/components/AddBookModal";
@@ -13,36 +13,116 @@ import AIRecommendations from "@/components/AIRecommendations";
 
 const STORAGE_KEY = "smartshelf-books";
 
+const EXAMPLE_BOOKS: Book[] = [
+  {
+    id: "ex-1",
+    title: "Atomic Habits",
+    author: "James Clear",
+    genre: "Self-Help",
+    totalPages: 320,
+    pagesRead: 320,
+    rating: 5,
+    notes: "An easy & proven way to build good habits & break bad ones.",
+    coverColor: "#6B4226",
+    dateAdded: "2025-11-08",
+    status: "finished",
+  },
+  {
+    id: "ex-2",
+    title: "Dune",
+    author: "Frank Herbert",
+    genre: "Sci-Fi",
+    totalPages: 688,
+    pagesRead: 350,
+    rating: 4,
+    notes: "Epic science fiction masterpiece about politics, religion, and ecology.",
+    coverColor: "#C47A4A",
+    dateAdded: "2025-12-01",
+    status: "reading",
+  },
+  {
+    id: "ex-3",
+    title: "The Pragmatic Programmer",
+    author: "David Thomas & Andrew Hunt",
+    genre: "Technology",
+    totalPages: 352,
+    pagesRead: 352,
+    rating: 5,
+    notes: "Essential reading for every software developer.",
+    coverColor: "#2C3E6B",
+    dateAdded: "2026-01-15",
+    status: "finished",
+  },
+  {
+    id: "ex-4",
+    title: "Project Hail Mary",
+    author: "Andy Weir",
+    genre: "Sci-Fi",
+    totalPages: 496,
+    pagesRead: 0,
+    rating: 5,
+    notes: "A lone astronaut must save humanity. Rocky is the best!",
+    coverColor: "#2E4A6B",
+    dateAdded: "2026-04-01",
+    status: "to-read",
+  },
+  {
+    id: "ex-5",
+    title: "Deep Work",
+    author: "Cal Newport",
+    genre: "Productivity",
+    totalPages: 296,
+    pagesRead: 296,
+    rating: 4,
+    notes: "Rules for focused success in a distracted world.",
+    coverColor: "#3A5A6B",
+    dateAdded: "2026-02-10",
+    status: "finished",
+  },
+  {
+    id: "ex-6",
+    title: "The Design of Everyday Things",
+    author: "Don Norman",
+    genre: "Design",
+    totalPages: 368,
+    pagesRead: 0,
+    rating: 4,
+    notes: "The ultimate guide to human-centered design.",
+    coverColor: "#6B5A2E",
+    dateAdded: "2025-09-12",
+    status: "to-read",
+  },
+];
+
+const getInitialBooks = () => {
+  if (typeof window === "undefined") return SAMPLE_BOOKS;
+
+  const saved = window.localStorage.getItem(STORAGE_KEY);
+  if (!saved) return SAMPLE_BOOKS;
+
+  try {
+    return JSON.parse(saved) as Book[];
+  } catch {
+    return SAMPLE_BOOKS;
+  }
+};
+
 export default function Home() {
-  const [books, setBooks] = useState<Book[]>([]);
+  const [books, setBooks] = useState<Book[]>(getInitialBooks);
   const [showAddModal, setShowAddModal] = useState(false);
   const [search, setSearch] = useState("");
   const [filterStatus, setFilterStatus] = useState<string>("all");
   const [filterGenre, setFilterGenre] = useState<string>("all");
   const [showStats, setShowStats] = useState(false);
-  const [mounted, setMounted] = useState(false);
 
-  // Load from localStorage
+  // Save changes without a mount-time state sync.
   useEffect(() => {
-    setMounted(true);
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      try {
-        setBooks(JSON.parse(saved));
-      } catch {
-        setBooks(SAMPLE_BOOKS);
-      }
-    } else {
-      setBooks(SAMPLE_BOOKS);
-    }
-  }, []);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(books));
+  }, [books]);
 
-  // Save to localStorage
-  useEffect(() => {
-    if (mounted) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(books));
-    }
-  }, [books, mounted]);
+  const handleExample = () => {
+    setBooks(EXAMPLE_BOOKS);
+  };
 
   const addBook = (book: Book) => {
     setBooks((prev) => [book, ...prev]);
@@ -68,8 +148,6 @@ export default function Home() {
   }, [books, search, filterStatus, filterGenre]);
 
   const genres = useMemo(() => [...new Set(books.map((b) => b.genre))].sort(), [books]);
-
-  if (!mounted) return null;
 
   return (
     <div className="min-h-screen">
@@ -105,6 +183,16 @@ export default function Home() {
 
       {/* Main */}
       <main className="relative z-10 max-w-7xl mx-auto px-6 py-6">
+        {/* Try Example Button */}
+        <div className="mb-4">
+          <button
+            onClick={handleExample}
+            className="w-full py-3 rounded-xl border-2 border-dashed border-[var(--accent-gold)]/40 text-[var(--accent-gold)] text-sm font-medium hover:bg-[var(--accent-gold)]/5 hover:border-[var(--accent-gold)]/60 transition-all"
+          >
+            ⚡ Try Example — Sample Library
+          </button>
+        </div>
+
         {/* Toolbar */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
           {/* Search */}
