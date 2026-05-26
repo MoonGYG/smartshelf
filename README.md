@@ -1,4 +1,5 @@
 # 📚 Smart Shelf
+\n🚀 **[Live Demo](https://smartshelf-eta.vercel.app)**
 
 Your personal AI-powered bookshelf. Track what you've read, what you're reading, and what's next. Get AI recommendations based on your taste.
 
